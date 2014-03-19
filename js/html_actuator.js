@@ -38,7 +38,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continue = function (restart) {
   if (typeof ga !== "undefined") {
-    ga("send", "event", "game", restart ? "restart" : "keep playing");
+    ga("send", "event", window.gameName || "game", restart ? "restart" : "keep playing");
   }
   this.clearMessage();
 };
@@ -131,7 +131,7 @@ HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
   var message = won ? "You win!" : "Game over!";
   if (typeof ga !== "undefined") {
-    ga("send", "event", "game", "end", type, this.score);
+    ga("send", "event", window.gameName || "game", "end", type, this.score);
   }
 
   this.messageContainer.classList.add(type);

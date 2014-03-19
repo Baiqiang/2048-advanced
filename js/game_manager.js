@@ -150,7 +150,7 @@ GameManager.prototype.move = function (direction) {
           self.score += merged.value;
 
           // The mighty 2048 tile
-          if (merged.value >= 2048 && merged.type === 'number') self.won = true;
+          if (merged.value >= 2048 && merged.type === 'number' && self.keepPlaying === false) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
@@ -239,7 +239,7 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
           var other  = self.grid.cellContent(cell);
 
-          if (other && other.value === tile.value) {
+          if (other && (tile.type === 'operator' || tile.type === 'operator' || other.value === tile.value)) {
             return true; // These two tiles can be merged
           }
         }

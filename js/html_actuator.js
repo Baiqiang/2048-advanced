@@ -59,13 +59,24 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
+  var value = tile.value;
 
-  if (tile.value > 2048) classes.push("tile-super");
+  if (value > 2048) classes.push("tile-super");
+  if (value > 32768) {
+    (function() {
+      var i = 1, n = value;
+      while (n > 2) {
+        i++;
+        n /= 2;
+      }
+      value = '2^' + i;
+    })();
+  }
 
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
-  inner.textContent = tile.type === 'number' ? tile.value : '×' + tile.value;
+  inner.textContent = tile.type === 'number' ? value : '×' + value;
 
   if (tile.previousPosition) {
     // Make sure that the tile gets rendered in the previous position first
